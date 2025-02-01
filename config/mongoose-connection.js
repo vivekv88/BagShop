@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
+const debugr = require('debug')('development:mongoose');
+const config = require('config');
 
 mongoose
-.connect('mongodb://localhost:27017/bagshop')
+.connect(`${config.get("MONGODB_URI")}/bagshop `) 
 .then(() => {
-    console.log('Connected to database');
+    debugr('Connected to database');
 }).catch((err) => {     
-    console.log('Database connection failed');
-    console.log(err);
+    debugr(err);
 });
 
 module.exports = mongoose.connection;
