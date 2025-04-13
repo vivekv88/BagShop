@@ -10,6 +10,10 @@ const productSchema = mongoose.Schema({
         default: 0
     },
     netamount:Number,
+    quantity:{
+        type:Number,
+        default:0
+    },
     bgcolor: String,
     panelcolor: String,
     textcolor: String,

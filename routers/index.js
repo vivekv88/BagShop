@@ -16,23 +16,80 @@ router.get('/shop',isLoggedin, async (req,res) => {
 })
 
 
-router.get('/cart',isLoggedin, async (req,res) => {
-    let user = await userModel.findOne({email: req.user.email}).populate('cart')
-    let item = user.cart;
-    item.forEach(element => {
-        let netAmount = (Number(element.price) - Number(element.discount)) + 20;
-        element.netamount = netAmount;
-    });
-    
-    res.render('cart',{user});
-})
+router.get('/cart', isLoggedin, async (req, res) => {
+    try {
+        if (!req.user || !req.user.email) {
+            return res.redirect('/login'); // or some error response
+        }
+
+        let user = await userModel.findOne({ email: req.user.email }).populate('cart.product');
+        
+
+        user.cart.forEach(element => {
+            if (element.product) {
+                let netAmount = (Number(element.product.price) - Number(element.product.discount)) + 20;
+                // Add netamount temporarily for rendering
+                element.product.netamount = netAmount;
+            }
+        });
+
+        res.render('cart', { user });
+
+    } catch (err) {
+        console.error('Error loading cart:', err);
+        res.status(500).send("Something went wrong");
+    }
+});
+
 
 router.get('/addtocart/:product_id',isLoggedin, async (req,res) => {
     let user = await userModel.findOne({email: req.user.email})
-    user.cart.push(req.params.product_id)
+
+    //check for existing item
+    let existingItem = await user.cart.find(item => item.product.toString() === req.params.product_id)
+    if(existingItem){
+        existingItem.quantity += 1;
+    }else{
+        // If product doesn't exist, add it with quantity 1
+        user.cart.push({
+            product: req.params.product_id,
+            quantity: 1
+        });
+    }
+
     await user.save();
     req.flash("success", "Added to Cart")
     res.redirect("/shop")
 })
+
+
+
+router.get('/increasequantity/:product_id', isLoggedin, async (req, res) => {
+    let user = await userModel.findOne({email: req.user.email});
+    const cartItem = user.cart.find(item => item.product.toString() === req.params.product_id);
+    
+    if (cartItem) {
+        cartItem.quantity += 1;
+        await user.save();
+    }
+    
+    res.redirect('/cart');
+});
+
+router.get('/decreasequantity/:product_id', isLoggedin, async (req, res) => {
+    let user = await userModel.findOne({email: req.user.email});
+    const cartItem = user.cart.find(item => item.product.toString() === req.params.product_id);
+    
+    if (cartItem) {
+        if (cartItem.quantity > 1) {
+            cartItem.quantity -= 1;
+        } else {
+            // Remove item if quantity becomes 0
+            user.cart = user.cart.filter(item => item.product.toString() !== req.params.product_id);
+        }
+        await user.save();
+    }
+    res.redirect('/cart');
+});
 
 module.exports = router;

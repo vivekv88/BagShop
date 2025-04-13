@@ -20,14 +20,14 @@ if(process.env.NODE_ENV === 'development'){
 });
 }
 
-router.get('/admin', (req, res) => {    
+router.get('/createproducts', (req, res) => {    
     let success = req.flash("success")
-    res.render('createProducts', { success });
+    res.render('createproducts', { success });
 });
 
-// router.get('/createproducts', (req, res) => {    
-//     res.render('createProducts');
-// });
+router.get('/admin', (req, res) => {    
+    res.render('admin');
+});
 
 
 
