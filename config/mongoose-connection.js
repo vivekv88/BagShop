@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 const debugr = require('debug')('development:mongoose');
 const config = require('config');
 
-mongoose
-.connect(`${config.get("MONGODB_URI")}/bagshop `) 
+mongoose.connect('mongodb+srv://vivekraj2955:vivek8874@cluster1.dpqkjhb.mongodb.net/?') 
 .then(() => {
     debugr('Connected to database');
 }).catch((err) => {     
