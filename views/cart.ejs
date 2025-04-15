@@ -28,7 +28,7 @@
                 </div>
                 <div class="flex text-[<%= item.product.textcolor %>] items-center justify-between px-5 py-3">
                     <h4 class="text-lg">Net Total</h4>
-                    <h2 class="text-lg">₹ <%= Number(item.product.netamount) %></h2>
+                    <h2 class="text-lg">₹ <%= Number(item.product.netamount) * (item.quantity) - (20*(item.quantity-1)) %></h2>
                 </div>
             </div>
             <div class="w-[70%]">
