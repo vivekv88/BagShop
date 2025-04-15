@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const ownerModel = require('../models/owner-model');
+const productModel = require('../models/product-model')
 
 if(process.env.NODE_ENV === 'development'){
     router.post('/create', async (req, res) => {    
@@ -25,9 +26,16 @@ router.get('/createproducts', (req, res) => {
     res.render('createProducts', { success });
 });
 
-router.get('/admin', (req, res) => {    
-    res.render('admin');
+router.get('/admin', async (req, res) => {    
+    let products = await productModel.find({id:productModel._id})
+    res.render('admin',{products});
 });
+
+router.get('/deleteproducts/:_id',async (req,res) => {
+    const productId = req.params._id;
+    await productModel.findByIdAndDelete(productId);
+    res.flash("Product deleted successfully");
+})
 
 
 

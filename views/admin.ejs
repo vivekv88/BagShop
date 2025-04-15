@@ -1,124 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Page</title>
 </head>
+
 <body>
     <%- include('./partials/header') %>
-    <div class="w-full h-screen flex items-start px-20 py-20">
-        <div class="w-[25%] flex h-screen flex-col items-start">
-            <div class="flex flex-col">
-                <a class="block w-fit mb-2" href="">All Products</a>
-                <a class="block w-fit mb-2" href="/owners/createProducts">Create new product</a>
-            </div>
-        </div>
-        <div class="w-[75%] flex flex-col gap-5 h-screen">
-            <a class="text-red-500" href="">Delete all</a>
-            <div class="flex items-start gap-5">
-                <div class="w-60 bg-red-500">
-                    <div class="w-full h-52 bg-yellow-500"></div>
-                    <div class="flex justify-between items-center px-4 py-4">
-                        <div>
-                            <h3>Clinge Bag</h3>
-                            <h4>₹ 1200</h4>
-                        </div>
-                        <a class="w-7 h-7 flex items-center justify-center rounded-full bg-white" href="">
-                            <i class="ri-add-line"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="w-60 bg-red-500">
-                    <div class="w-full h-52 bg-yellow-500"></div>
-                    <div class="flex justify-between items-center px-4 py-4">
-                        <div>
-                            <h3>Clinge Bag</h3>
-                            <h4>₹ 1200</h4>
-                        </div>
-                        <a class="w-7 h-7 flex items-center justify-center rounded-full bg-white" href="">
-                            <i class="ri-add-line"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="w-60 bg-red-500">
-                    <div class="w-full h-52 bg-yellow-500"></div>
-                    <div class="flex justify-between items-center px-4 py-4">
-                        <div>
-                            <h3>Clinge Bag</h3>
-                            <h4>₹ 1200</h4>
-                        </div>
-                        <a class="w-7 h-7 flex items-center justify-center rounded-full bg-white" href="">
-                            <i class="ri-add-line"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="w-60 bg-red-500">
-                    <div class="w-full h-52 bg-yellow-500"></div>
-                    <div class="flex justify-between items-center px-4 py-4">
-                        <div>
-                            <h3>Clinge Bag</h3>
-                            <h4>₹ 1200</h4>
-                        </div>
-                        <a class="w-7 h-7 flex items-center justify-center rounded-full bg-white" href="">
-                            <i class="ri-add-line"></i>
-                        </a>
-                    </div>
+        <div class="w-full h-screen flex items-start px-20 py-20">
+            <div class="w-[25%] flex h-screen flex-col items-start">
+                <div class="flex flex-col text-2xl">
+                    <a class="block w-fit mb-2" href="">All Products</a>
+                    <a class="block w-fit mb-2" href="/owners/createProducts">Create new product</a>
                 </div>
             </div>
-            <div class="flex items-start gap-5">
-                <div class="w-60 bg-red-500">
-                    <div class="w-full h-52 bg-yellow-500"></div>
-                    <div class="flex justify-between items-center px-4 py-4">
-                        <div>
-                            <h3>Clinge Bag</h3>
-                            <h4>₹ 1200</h4>
+
+            <div class="w-[75%] flex flex-col gap-5 h-screen">
+                <a class="text-grey-500 ml-5 text-2xl border-[1px] w-fit px-5 py-3 rounded-lg outline-none bg-red-600 text-white"
+                    href="/owners/deleteproducts">Delete all</a>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-6">
+                    <% products.forEach(product=> { %>
+                        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                            <div class="w-full p-4 bg-[<%= product.bgcolor %>]">
+                                <% if (product.image) { %>
+                                    <img class="h-60 w-full object-cover rounded-lg"
+                                        src="data:image/jpeg;base64,<%= product.image.toString('base64') %>"
+                                        alt="Product Image">
+                                    <% } else { %>
+                                        <p class="text-center text-gray-700">No image available</p>
+                                        <% } %>
+                            </div>
+                            <div class="flex justify-between bg-[<%= product.panelcolor %>] text-[<%= product.textcolor %>] items-center px-4 py-3">
+                                <div>
+                                    <h3 class="text-lg font-semibold">
+                                        <%= product.name %>
+                                    </h3>
+                                    <h4 class="text-md font-medium">₹ <%= product.price %>
+                                    </h4>
+                                </div>
+                                <a class="w-8 h-8 flex items-center justify-center rounded-full bg-white text-black hover:bg-gray-200 transition"
+                                    href="#">
+                                    <i class="ri-add-line"></i>
+                                </a>
+                            </div>
                         </div>
-                        <a class="w-7 h-7 flex items-center justify-center rounded-full bg-white" href="">
-                            <i class="ri-add-line"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="w-60 bg-red-500">
-                    <div class="w-full h-52 bg-yellow-500"></div>
-                    <div class="flex justify-between items-center px-4 py-4">
-                        <div>
-                            <h3>Clinge Bag</h3>
-                            <h4>₹ 1200</h4>
-                        </div>
-                        <a class="w-7 h-7 flex items-center justify-center rounded-full bg-white" href="">
-                            <i class="ri-add-line"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="w-60 bg-red-500">
-                    <div class="w-full h-52 bg-yellow-500"></div>
-                    <div class="flex justify-between items-center px-4 py-4">
-                        <div>
-                            <h3>Clinge Bag</h3>
-                            <h4>₹ 1200</h4>
-                        </div>
-                        <a class="w-7 h-7 flex items-center justify-center rounded-full bg-white" href="">
-                            <i class="ri-add-line"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="w-60 bg-red-500">
-                    <div class="w-full h-52 bg-yellow-500"></div>
-                    <div class="flex justify-between items-center px-4 py-4">
-                        <div>
-                            <h3>Clinge Bag</h3>
-                            <h4>₹ 1200</h4>
-                        </div>
-                        <a class="w-7 h-7 flex items-center justify-center rounded-full bg-white" href="">
-                            <i class="ri-add-line"></i>
-                        </a>
-                    </div>
+                        <% }) %>
                 </div>
             </div>
-        </div>
-    </div>
-    <%- include('./partials/footer') %>
+            <%- include('./partials/footer') %>
 </body>
+
 </html>
-    

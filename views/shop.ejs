@@ -40,9 +40,9 @@
             </div>
         </div>
         <div class="w-[75%] flex flex-col gap-5 h-screen">
-            <div class="flex items-start gap-5">
+            <div class="flex rounded-2xl items-start gap-5">
                 <% products.forEach(function(product){ %>
-                    <div class="w-60">
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
                         <div class="w-full h-52 flex items-center justify-center bg-[<%= product.bgcolor %>]">
                             <img class="h-[12rem]" src="data:image/jpeg;base64,<%= product.image.toString('base64') %>"
                                 alt="">
