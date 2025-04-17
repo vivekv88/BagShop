@@ -76,6 +76,31 @@ router.get('/increasequantity/:product_id', isLoggedin, async (req, res) => {
     res.redirect('/cart');
 });
 
+router.get('/removefromcart/:_id', async (req, res) => {
+    const productId = req.params._id;
+
+    // Assuming you're using Passport.js and user is authenticated
+    const user = await userModel.findOne({ id: req.body._id });
+
+    if (!user) {
+        return res.status(404).send("User not found");
+    }
+
+    const cartItem = user.cart.find(item => item.product.toString() === productId);
+
+    if (cartItem) {
+        if (cartItem.quantity > 1) {
+            cartItem.quantity -= 1;
+        } else {
+            user.cart = user.cart.filter(item => item.product.toString() !== productId);
+        }
+
+        await user.save();
+    }
+
+    res.redirect('/cart');
+});
+
 router.get('/decreasequantity/:product_id', isLoggedin, async (req, res) => {
     let user = await userModel.findOne({email: req.user.email});
     const cartItem = user.cart.find(item => item.product.toString() === req.params.product_id);
