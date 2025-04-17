@@ -34,5 +34,7 @@ app.use('/owners',ownersRouter);
 app.use('/users',usersRouter);
 app.use('/products',productsRouter);
 
+const port = process.env.PORT || 3000
 
-app.listen(3000);
+
+app.listen(port);
